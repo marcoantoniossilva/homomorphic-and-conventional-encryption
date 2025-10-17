@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../prisma/prisma';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { encrypt } from "./crypto.controller";
 
 export const submitAnswers = async (req: Request, res: Response): Promise<any> => {
     const userId = req.userId;
@@ -70,7 +71,7 @@ export const submitAnswers = async (req: Request, res: Response): Promise<any> =
             data: answers.map(a => ({
                 userId,
                 questionId: a.questionId,
-                value: a.value
+                value: encrypt(a.value)
             })),
         });
 

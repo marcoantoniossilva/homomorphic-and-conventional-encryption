@@ -9,11 +9,9 @@ protegidas mesmo durante o processamento estatístico. A proposta busca
 demonstrar a viabilidade prática dessa técnica em um contexto
 educacional real.
 
-A **branch atual (`main`)** não realiza a criptografia dos
-dados. Ela serve como base funcional do sistema para fins de
-desenvolvimento e testes iniciais, sem aplicar a camada de segurança
-criptográfica. Em versões futuras, será utilizada a criptografia
-homomórfica para proteger as respostas dos alunos.
+A **branch atual (`aes256-encryption`)** implementa a criptografia
+dos valores das respostas utilizando criptografia simétrica (AES-256-GCM)
+por meio das bibliotecas nativas do Node.js.
 
 ## 🧩 Tecnologias Utilizadas
 

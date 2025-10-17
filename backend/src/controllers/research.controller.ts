@@ -3,6 +3,7 @@ import { prisma } from '../prisma/prisma';
 import { ResearchFilter } from '../@types/researchFilter';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { AnswerType, ResearchStatus, Question, Answer } from '@prisma/client';
+import { decrypt } from "./crypto.controller";
 import logger from '../logger/logger';
 
 export const getAll = async (req: Request, res: Response): Promise<any> => {
@@ -597,7 +598,7 @@ async function processResults(research: any): Promise<any> {
 async function getSumValues(answers: Answer[]) {
     let total = 0;
     for (const answer of answers) {
-        total += Number(answer.value);
+        total += Number(decrypt(answer.value));
     }
 
     return { sum: total.toString()};
@@ -624,7 +625,7 @@ async function logInfoAnswers(answers: Answer[]) {
             }
         });
 
-        logger.debug("\t\t" + user?.name + " - " + getAnswerLabel(question.answerType, answer.value));
+        logger.debug("\t\t" + user?.name + " - " + getAnswerLabel(question.answerType, decrypt(answer.value)));
     };
 }
 
