@@ -1,0 +1,79 @@
+<div class="form-container">
+
+    <div class="div-header">
+        <button mat-icon-button (click)="goBack()" aria-label="Voltar">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1 class="page-title">Responder Pesquisa</h1>
+    </div>
+
+    <section class="form-section mat-elevation-z1">
+        <form [formGroup]="answerForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <!-- Título e Disciplina -->
+            <div class="form-info" *ngIf="research">
+                <p><strong>Título:</strong> {{ research.title }}</p>
+                <p><strong>Disciplina:</strong> {{ research.course.name }}</p>
+                <p><strong>Professor:</strong> {{ research.course.teacher.name }}</p>
+                <p><strong>Disponível até:</strong> {{ research.deadline | date: 'dd/MM/yyyy HH:mm' }}</p>
+            </div>
+
+            <!-- Questões -->
+            <div formArrayName="answers">
+                <div *ngFor="let answerGroup of answers.controls; let i = index" [formGroupName]="i"
+                    class="form-section mat-elevation-z1">
+
+                    <p class="question-text"><strong>{{ i + 1 }}.</strong> {{ research.questions[i].text }}</p>
+
+                    <div style="display: grid;">
+                        <mat-radio-group formControlName="value" class="radio-group">
+                            <ng-container [ngSwitch]="research.questions[i].answerType">
+
+                                <!-- SIM_NAO -->
+                                <ng-container *ngSwitchCase="'SIM_NAO'">
+                                    <mat-radio-button color="primary" [value]="1">Sim</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="0">Não</mat-radio-button>
+                                </ng-container>
+
+                                <!-- ESCALA_NUMERICA -->
+                                <ng-container *ngSwitchCase="'ESCALA_NUMERICA'">
+                                    <mat-radio-button color="primary" [value]="0">0</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="1">1</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="2">2</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="3">3</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="4">4</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="5">5</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="6">6</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="7">7</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="8">8</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="9">9</mat-radio-button>
+                                    <mat-radio-button color="primary" [value]="10">10</mat-radio-button>
+                                </ng-container>
+
+                            </ng-container>
+                        </mat-radio-group>
+
+                        <mat-error *ngIf="answerGroup.get('value')?.invalid && answerGroup.get('value')?.touched">
+                            Resposta obrigatória
+                        </mat-error>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="answerForm.invalid">
+                    <mat-icon>check</mat-icon> Enviar Respostas
+                </button>
+                <button mat-raised-button color="primary" type="button" (click)="clearAnswers()">
+                    <mat-icon>clear</mat-icon>
+                    Limpar Respostas
+                </button>
+                <button mat-raised-button color="primary" type="button" (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon> Voltar
+                </button>
+            </div>
+        </form>
+    </section>
+</div>

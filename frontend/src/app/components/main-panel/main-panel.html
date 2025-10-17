@@ -1,0 +1,45 @@
+<div class="panel-container">
+
+  <div class="container">
+    <div class="panel-header">
+      <h1 class="page-title">Painel</h1>
+    </div>
+
+    <div class="panel-menu">
+      <!-- Card para Cadastro de Administradores -->
+      <div class="menu-card" (click)="navigateTo('/administradores')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon-panel-dashboard">admin_panel_settings</mat-icon>
+        <h2 class="menu-title">Administradores</h2>
+        <p class="menu-description">Cadastre e gerencie administradores no sistema</p>
+      </div>
+
+      <!-- Card para Cadastro de Disciplinas -->
+      <div class="menu-card" (click)="navigateTo('/disciplinas')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon-panel-dashboard">menu_book</mat-icon>
+        <h2 class="menu-title">Disciplinas</h2>
+        <p class="menu-description">Cadastre e gerencie disciplinas no sistema</p>
+      </div>
+
+      <!-- Card para Cadastro de Professores -->
+      <div class="menu-card" (click)="navigateTo('/professores')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon-panel-dashboard">school</mat-icon>
+        <h2 class="menu-title">Professores</h2>
+        <p class="menu-description">Cadastre e gerencie professores no sistema</p>
+      </div>
+
+      <!-- Card para Cadastro de Alunos -->
+      <div class="menu-card" (click)="navigateTo('/alunos')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon-panel-dashboard">people</mat-icon>
+        <h2 class="menu-title">Alunos</h2>
+        <p class="menu-description">Cadastre e gerencie alunos no sistema</p>
+      </div>
+
+      <!-- Card para Cadastro de Pesquisas -->
+      <div class="menu-card" (click)="navigateTo('/pesquisas')">
+        <mat-icon class="menu-icon-panel-dashboard">assignment</mat-icon>
+        <h2 class="menu-title">Pesquisas</h2>
+        <p class="menu-description">Crie e gerencie pesquisas de avaliação</p>
+      </div>
+    </div>
+  </div>
+</div>

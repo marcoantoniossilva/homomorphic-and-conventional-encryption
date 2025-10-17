@@ -1,0 +1,43 @@
+.message-box {
+    position: fixed;
+    top: 5%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    min-width: 300px;
+    max-width: 600px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    z-index: 9999;
+    color: var(--primary-contrast);
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    &.success {
+        background-color: #8cc98e;
+    }
+
+    &.error {
+        background-color: #f88a82;
+    }
+
+    &.info {
+        background-color: #8fc7f5;
+    }
+
+    &.warning {
+        background-color: #f8cf91;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+        padding: 0 8px;
+    }
+}

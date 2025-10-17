@@ -1,0 +1,31 @@
+<nav class="side-menu">
+    <div class="menu-item" (click)="navigateTo('/admin')">
+        <mat-icon class="menu-icon">dashboard</mat-icon>
+        <span class="menu-label">Painel</span>
+    </div>
+
+    <div class="menu-item" (click)="navigateTo('/administradores')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon">admin_panel_settings</mat-icon>
+        <span class="menu-label">Administradores</span>
+    </div>
+
+    <div class="menu-item" (click)="navigateTo('/disciplinas')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon">menu_book</mat-icon>
+        <span class="menu-label">Disciplinas</span>
+    </div>
+
+    <div class="menu-item" (click)="navigateTo('/professores')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon">school</mat-icon>
+        <span class="menu-label">Professores</span>
+    </div>
+
+    <div class="menu-item" (click)="navigateTo('/alunos')" *ngIf="isAdmin">
+        <mat-icon class="menu-icon">people</mat-icon>
+        <span class="menu-label">Alunos</span>
+    </div>
+
+    <div class="menu-item" (click)="navigateTo('/pesquisas')">
+        <mat-icon class="menu-icon">assignment</mat-icon>
+        <span class="menu-label">Pesquisas</span>
+    </div>
+</nav>

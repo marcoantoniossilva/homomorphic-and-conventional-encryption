@@ -1,0 +1,24 @@
+.form-container {
+    display: inline-block;
+    max-width: 600px;
+    margin: auto;
+    padding: 24px;
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.form-section {
+    background-color: var(--primary-contrast);
+    padding: 10px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}

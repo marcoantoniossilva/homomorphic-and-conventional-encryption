@@ -1,0 +1,134 @@
+<div>
+
+    <div class="container">
+        <div class="div-header">
+            <button mat-icon-button (click)="goBack()" aria-label="Voltar">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <h1 class="page-title">Disciplina</h1>
+        </div>
+
+        <div>
+
+            <!-- Filtros -->
+            <section class="filter-section mat-elevation-z1">
+                <h2 class="section-title">Filtros</h2>
+
+                <div class="filter-container">
+
+                    <mat-form-field appearance="fill" class="filter-field">
+                        <mat-label>Nome</mat-label>
+                        <input matInput [(ngModel)]="filters.name" placeholder="Digite o nome" />
+                        <mat-icon matPrefix>menu_book</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="filter-field">
+                        <mat-label>Professor</mat-label>
+                        <mat-select [(ngModel)]="filters.teacherId" placeholder="Selecione um professor">
+                            <mat-option [value]="null"></mat-option>
+                            <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                                {{ teacher.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon matPrefix>school</mat-icon>
+                    </mat-form-field>
+
+                    <div class="filter-actions">
+                        <button mat-raised-button color="primary" (click)="search()">
+                            <mat-icon>search</mat-icon> Pesquisar
+                        </button>
+
+                        <button mat-raised-button color="primary" (click)="clear()"
+                            [disabled]="!filters.name && !filters.teacherId">
+                            <mat-icon>clear</mat-icon> Limpar
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Seção de Resultados -->
+            <section class="results-section mat-elevation-z1">
+                <!-- Ações -->
+                <div class="action-bar">
+                    <button mat-raised-button color="primary" (click)="navigateToCreate()" [disabled]="isAnySelected()">
+                        <mat-icon>add</mat-icon> Adicionar
+                    </button>
+
+                    <button mat-raised-button color="primary" [matMenuTriggerFor]="actionsMenu"
+                        [disabled]="!isAnySelected()">
+                        <mat-icon>more_vert</mat-icon> Ações
+                    </button>
+
+                    <mat-menu #actionsMenu="matMenu">
+                        <button mat-menu-item [disabled]="!isOneSelected()" (click)="viewCourse(selectedCourse!)">
+                            <mat-icon>visibility</mat-icon>
+                            <span>Visualizar</span>
+                        </button>
+                        <button mat-menu-item [disabled]="!isOneSelected()" (click)="editCourse(selectedCourse!)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Editar</span>
+                        </button>
+                        <button mat-menu-item (click)="deleteCourse()">
+                            <mat-icon>delete</mat-icon>
+                            <span>Excluir</span>
+                        </button>
+                    </mat-menu>
+                </div>
+
+                <!-- Tabela -->
+                <div class="grid-container">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
+
+                        <!-- Coluna de Seleção -->
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox [disabled]="!hasData()" (change)="toggleAllRows($event)"
+                                    [checked]="isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                    color="primary"></mat-checkbox>
+                                Marcar
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()" (change)="toggleRow(row)"
+                                    [checked]="selection.isSelected(row)" color="primary"></mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <!-- Nome -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Nome</th>
+                            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+                        </ng-container>
+
+                        <!-- Professor -->
+                        <ng-container matColumnDef="teacher">
+                            <th mat-header-cell *matHeaderCellDef>Professor</th>
+                            <td mat-cell *matCellDef="let element">{{ element.teacher?.name }}</td>
+                        </ng-container>
+
+                        <!-- Criado em -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef>Criado em</th>
+                            <td mat-cell *matCellDef="let element">{{ element.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+                        </ng-container>
+
+                        <!-- Atualizado em -->
+                        <ng-container matColumnDef="updatedAt">
+                            <th mat-header-cell *matHeaderCellDef>Atualizado em</th>
+                            <td mat-cell *matCellDef="let element">{{ element.updatedAt | date:'dd/MM/yyyy HH:mm'}}</td>
+                        </ng-container>
+
+                        <!-- Linhas -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="toggleRow(row)"
+                            [class.selected]="selection.isSelected(row)"></tr>
+                    </table>
+                </div>
+
+                <p *ngIf="searched && dataSource.data.length === 0" class="no-results">
+                    Nenhuma disciplina encontrada.
+                </p>
+            </section>
+        </div>
+    </div>

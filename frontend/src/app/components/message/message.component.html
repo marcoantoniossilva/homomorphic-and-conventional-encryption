@@ -1,0 +1,4 @@
+<div *ngIf="visible" [ngClass]="type" class="message-box">
+  <span class="message-text">{{ message }}</span>
+  <button class="close-btn" (click)="close()">×</button>
+</div>

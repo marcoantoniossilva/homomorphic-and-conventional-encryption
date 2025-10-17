@@ -1,0 +1,14 @@
+<div class="accessibility-toolbar" [class.expanded]="expanded">
+    <button class="toggle-btn" (click)="togglePanel()">
+        {{ expanded ? '×' : '♿' }}
+    </button>
+
+    <div class="panel" *ngIf="expanded">
+        <button (click)="increaseFont()">A+</button>
+        <button (click)="decreaseFont()">A−</button>
+        <button (click)="toggleContrast()">
+            {{ contrastEnabled ? 'Normal' : 'Alto contraste' }}
+        </button>
+        <button (click)="reset()">Resetar</button>
+    </div>
+</div>

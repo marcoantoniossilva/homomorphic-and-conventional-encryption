@@ -1,0 +1,69 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Sistema de Avaliação</h1>
+      <p>Entre com suas credenciais para acessar</p>
+    </div>
+
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="Digite seu email"
+          [(ngModel)]="credentials.username"
+          name="username"
+          required
+          email
+        />
+        <mat-icon matPrefix>email</mat-icon>
+        <mat-error *ngIf="loginForm.controls['username']?.invalid && loginForm.controls['username']?.touched">
+          Email inválido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Digite sua senha"
+          [(ngModel)]="credentials.password"
+          name="password"
+          required
+        />
+        <mat-icon matPrefix>lock</mat-icon>
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="hidePassword ? 'Mostrar senha' : 'Esconder senha'"
+        >
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.controls['password']?.invalid && loginForm.controls['password']?.touched">
+          Senha é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+      <div class="text-center mt-20">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!loginForm.form.valid || isLoading"
+          class="full-width"
+        >
+          <mat-spinner *ngIf="isLoading" diameter="20" class="spinner-button"></mat-spinner>
+          <span *ngIf="!isLoading">Entrar</span>
+        </button>
+      </div>
+    </form>
+
+    <div *ngIf="errorMessage" class="error-message mt-20">
+      <mat-error>{{ errorMessage }}</mat-error>
+    </div>
+  </div>
+</div>

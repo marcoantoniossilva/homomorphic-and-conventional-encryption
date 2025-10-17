@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    height: 100vh;
+    /* ocupa toda a altura da tela */
+}
+
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* distribui os itens igualmente */
+    align-items: center;
+    width: 140px; 
+    /* largura fixa do menu lateral */
+    background-color: #f5f5f5;
+    padding: 16px 0;
+}
+
+.menu-item {
+    cursor: pointer;
+    text-align: center;
+    color: #444;
+    transition: color 0.2s;
+}
+
+.menu-item:hover {
+    color: var(--primary-color);
+    transition: 0.3s;
+}
+
+.menu-icon {
+    font-size: 1.6rem;
+}
+
+.menu-label {
+    font-size: 1rem;
+    margin-top: 4px;
+    display: block;
+}

@@ -1,0 +1,13 @@
+.main-panel-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.user-name {
+    margin-right: 15px;
+}

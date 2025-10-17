@@ -1,0 +1,91 @@
+<div class="form-container">
+
+    <div class="div-header">
+        <button mat-icon-button (click)="goBack()" aria-label="Voltar">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <ng-container *ngIf="formAction === 'create'">
+            <h1 class="page-title">Cadastro de {{ formType | titlecase }}</h1>
+        </ng-container>
+        <ng-container *ngIf="formAction === 'update'">
+            <h1 class="page-title">Atualização de {{ formType | titlecase }}</h1>
+        </ng-container>
+        <ng-container *ngIf="formAction === 'view'">
+            <h1 class="page-title">Visualização de {{ formType | titlecase }}</h1>
+        </ng-container>
+    </div>
+
+    <section class="form-section mat-elevation-z1">
+
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <!-- Nome -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="name" placeholder="Digite o nome completo">
+                <mat-icon matPrefix>person</mat-icon>
+                <mat-error *ngIf="name?.hasError('required')">Nome é obrigatório</mat-error>
+                <mat-error *ngIf="name?.hasError('minlength')">Nome deve ter no mínimo 3 caracteres</mat-error>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="Digite o email">
+                <mat-icon matPrefix>email</mat-icon>
+                <mat-error *ngIf="email?.hasError('required')">Email é obrigatório</mat-error>
+                <mat-error *ngIf="email?.hasError('email')">Email inválido</mat-error>
+            </mat-form-field>
+
+            <ng-container *ngIf="formAction === 'create' || formAction === 'update'">
+
+                <!-- Senha -->
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Senha</mat-label>
+                    <input matInput type="password" formControlName="password" placeholder="Digite a senha">
+                    <mat-icon matPrefix>lock</mat-icon>
+                    <mat-error *ngIf="password?.hasError('required')">Senha é obrigatória</mat-error>
+                    <mat-error *ngIf="password?.hasError('minlength')">A senha deve ter no mínimo 6
+                        caracteres</mat-error>
+                </mat-form-field>
+
+                <!-- Confirmar Senha -->
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Confirmar Senha</mat-label>
+                    <input matInput type="password" formControlName="confirmPassword" placeholder="Repita a senha">
+                    <mat-icon matPrefix>lock</mat-icon>
+                    <mat-error *ngIf="confirmPassword?.hasError('required')">
+                        Confirmação de senha é obrigatória
+                    </mat-error>
+                    <mat-error *ngIf="confirmPassword?.hasError('passwordMismatch') && confirmPassword?.touched">
+                        As senhas não coincidem
+                    </mat-error>
+                </mat-form-field>
+
+            </ng-container>
+
+            <ng-container *ngIf="formType === 'professor'">
+                <mat-form-field>
+                    <mat-label>Matrícula</mat-label>
+                    <input matInput formControlName="teacherRegistrationNumber" />
+                </mat-form-field>
+            </ng-container>
+
+            <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="userForm.invalid || formAction === 'view'">
+                    <mat-icon>save</mat-icon> Salvar
+                </button>
+
+                <button mat-raised-button color="primary" type="button" (click)="clear()"
+                    [disabled]="userForm.pristine">
+                    <mat-icon>clear</mat-icon> Limpar
+                </button>
+
+                <button mat-raised-button color="primary" type="button" (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon> Voltar
+                </button>
+            </div>
+        </form>
+    </section>
+</div>

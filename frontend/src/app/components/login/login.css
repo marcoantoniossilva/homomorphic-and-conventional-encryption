@@ -1,0 +1,87 @@
+/* Container geral centralizado */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  padding: 1rem;
+}
+
+/* Card central com sombra e borda arredondada */
+.login-card {
+  background-color: var(--primary-contrast);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+  transform: scale(1.01);
+}
+
+/* Cabeçalho do card */
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.login-header p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Campos do formulário */
+.full-width {
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+/* Botão de login */
+button[type="submit"] {
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Spinner dentro do botão */
+.spinner-button {
+  margin: auto;
+}
+
+/* Mensagem de erro */
+.error-message {
+  text-align: center;
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+/* Espaçamento adicional */
+.mt-20 {
+  margin-top: 1.25rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 2rem;
+  }
+
+  .login-header h1 {
+    font-size: 1.5rem;
+  }
+}

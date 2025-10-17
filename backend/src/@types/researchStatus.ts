@@ -1,0 +1,1 @@
+export type ResearchStatus = 'ABERTA' | 'ENCERRADA_PRAZO' | 'FINALIZADA';

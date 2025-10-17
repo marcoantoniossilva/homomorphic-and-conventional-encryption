@@ -1,0 +1,21 @@
+<main>
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav mode="side" [opened]="showSideMenu" class="sidenav">
+            <ng-container *ngIf="showSideMenu">
+                <app-side-menu [isAdmin]="isAdmin"></app-side-menu>
+            </ng-container>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="content">
+            <app-header [isAdmin]="isAdmin" [userInfo]="userInfo"></app-header>
+
+            <div class="main-content">
+                <app-accessibility-toolbar></app-accessibility-toolbar>
+                <router-outlet></router-outlet>
+                <app-message></app-message> <!-- Componente de mensagem global -->
+            </div>
+
+            <app-footer></app-footer>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</main>

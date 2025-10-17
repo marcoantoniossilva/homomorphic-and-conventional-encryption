@@ -1,0 +1,111 @@
+<div class="form-container">
+
+    <div class="div-header">
+        <button mat-icon-button (click)="goBack()" aria-label="Voltar">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1 class="page-title">Cadastro de Pesquisa</h1>
+    </div>
+
+    <section class="form-section mat-elevation-z1">
+        <form [formGroup]="researchForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <!-- Título -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Título</mat-label>
+                <input matInput formControlName="title" placeholder="Digite o título da pesquisa" />
+                <mat-icon matPrefix>assignment</mat-icon>
+                <mat-error *ngIf="researchForm.get('title')?.hasError('required')">Título é obrigatório</mat-error>
+            </mat-form-field>
+
+            <!-- Disciplina -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Disciplina</mat-label>
+                <mat-select formControlName="courseId" placeholder="Selecione a disciplina">
+                    <mat-option *ngFor="let course of courses" [value]="course.id">
+                        {{ course.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-icon matPrefix>menu_book</mat-icon>
+                <mat-error *ngIf="researchForm.get('courseId')?.hasError('required')">Disciplina é
+                    obrigatória</mat-error>
+            </mat-form-field>
+            <div class="form-row">
+                <!-- Data -->
+                <mat-form-field appearance="fill" class="form-field" style="width: 60%;">
+                    <mat-label>Data Limite</mat-label>
+                    <input matInput [min]="today" formControlName="deadlineDate" [matDatepicker]="picker"
+                        placeholder="Selecione a data" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-icon matPrefix>event</mat-icon>
+                    <mat-error *ngIf="researchForm.get('deadlineDate')?.hasError('required')">Data limite é
+                        obrigatória</mat-error>
+                </mat-form-field>
+
+                <!-- Hora -->
+                <mat-form-field appearance="fill" class="form-field" style="width: 40%;">
+                    <mat-label>Hora</mat-label>
+                    <input matInput type="time" formControlName="deadlineTime" placeholder="Selecione a hora" />
+                    <mat-icon matPrefix>schedule</mat-icon>
+                    <mat-error *ngIf="researchForm.get('deadlineTime')?.hasError('required')">
+                        Hora é obrigatória
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Questões -->
+            <div formArrayName="questions" class="questions-section">
+                <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i"
+                    class="question-item">
+
+                    <div class="form-row">
+                        <mat-form-field appearance="fill" class="with-icon-field">
+                            <mat-label>Pergunta {{ i + 1 }}</mat-label>
+                            <input matInput formControlName="text" placeholder="Digite a pergunta" />
+                        </mat-form-field>
+
+                        <ng-container *ngIf="formAction != 'view'">
+                            <button mat-icon-button color="warn" type="button" (click)="removeQuestion(i)"
+                                aria-label="Remover pergunta">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </ng-container>
+                    </div>
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Tipo de Resposta {{ i + 1 }}</mat-label>
+                        <mat-select formControlName="answerType">
+                            <mat-option value="ESCALA_NUMERICA">Escala Numérica</mat-option>
+                            <mat-option value="SIM_NAO">Sim ou Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+            <ng-container *ngIf="formAction != 'view'">
+                <button mat-button type="button" color="primary" (click)="addQuestion()">
+                    <mat-icon>add</mat-icon> Adicionar Pergunta
+                </button>
+            </ng-container>
+
+            <!-- Ações -->
+            <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="researchForm.invalid || formAction === 'view'">
+                    <mat-icon>save</mat-icon> Salvar
+                </button>
+
+                <button mat-raised-button color="primary" type="button" (click)="clear()"
+                    [disabled]="researchForm.pristine">
+                    <mat-icon>clear</mat-icon> Limpar
+                </button>
+
+                <button mat-raised-button color="primary" type="button" (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon> Voltar
+                </button>
+            </div>
+        </form>
+    </section>
+</div>

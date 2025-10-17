@@ -1,0 +1,62 @@
+<div class="form-container">
+
+    <div class="div-header">
+        <button mat-icon-button (click)="goBack()" aria-label="Voltar">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <ng-container *ngIf="formAction === 'create'">
+            <h1 class="page-title">Cadastro de Disciplina</h1>
+        </ng-container>
+        <ng-container *ngIf="formAction === 'update'">
+            <h1 class="page-title">Atualização de Disciplina</h1>
+        </ng-container>
+        <ng-container *ngIf="formAction === 'view'">
+            <h1 class="page-title">Visualização de Disciplina</h1>
+        </ng-container>
+    </div>
+
+    <section class="form-section mat-elevation-z1">
+
+        <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <!-- Nome -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="name" placeholder="Digite o nome da disciplina">
+                <mat-icon matPrefix>menu_book</mat-icon>
+                <mat-error *ngIf="name?.hasError('required')">Nome é obrigatório</mat-error>
+                <mat-error *ngIf="name?.hasError('minlength')">Nome deve ter no mínimo 3 caracteres</mat-error>
+            </mat-form-field>
+
+            <!-- Professor -->
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Professor</mat-label>
+                <mat-select name="teacherId" formControlName="teacherId" placeholder="Selecione um professor" required>
+                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                        {{ teacher.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-icon matPrefix>person</mat-icon>
+                <mat-error *ngIf="courseForm.get('teacherId')?.hasError('required') && courseForm.get('teacherId')?.touched">
+                    Professor é obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="courseForm.invalid || formAction === 'view'">
+                    <mat-icon>save</mat-icon> Salvar
+                </button>
+
+                <button mat-raised-button color="primary" type="button" (click)="clear()"
+                    [disabled]="courseForm.pristine">
+                    <mat-icon>clear</mat-icon> Limpar
+                </button>
+
+                <button mat-raised-button color="primary" type="button" (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon> Voltar
+                </button>
+            </div>
+        </form>
+    </section>
+</div>

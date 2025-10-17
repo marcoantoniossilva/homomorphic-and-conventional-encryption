@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMINISTRADOR
+  PROFESSOR
+  ALUNO
+}
+
+enum AnswerType {
+  SIM_NAO
+  ESCALA_NUMERICA
+}
+
+enum ResearchStatus {
+  ABERTA           // Aberta para respostas
+  ENCERRADA_PRAZO  // Prazo encerrado
+  FINALIZADA       // Finalizada manualmente
+}
+
+model User {
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  name           String
+  password       String
+  role           Role
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  teacherRegistrationNumber       String        @default("")
+
+  course         Course[]         @relation("TeacherCourse")
+  answers        Answer[]         @relation("StudentAnswer")
+}
+
+model Course {
+  id             Int              @id @default(autoincrement())
+  name           String
+  teacherId      Int
+  teacher        User             @relation("TeacherCourse", fields: [teacherId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  researches     Research[]       @relation("ResearchCourse")
+}
+
+model Research {
+  id             Int              @id @default(autoincrement())
+  title          String
+  courseId       Int
+  course         Course           @relation("ResearchCourse", fields: [courseId], references: [id])
+  status         ResearchStatus   @default(ABERTA) //ABERTA, ENCERRADA_PRAZO ou FINALIZADA 
+  deadline       DateTime
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  questions      Question[]       @relation("QuestionResearch")
+  answers        Answer[]         @relation("AnswerResearch")
+
+  @@unique([courseId, title])
+}
+
+model Question {
+  id             Int               @id @default(autoincrement())
+  researchId     Int
+  research       Research          @relation("QuestionResearch", fields: [researchId], references: [id])
+  text           String
+  answerType     AnswerType        // SIM_NAO ou ESCALA_NUMERICA
+  createdAt      DateTime          @default(now())
+
+  answers        Answer[]          @relation("QuestionAnswer")
+}
+
+
+model Answer {
+  id              Int              @id @default(autoincrement())
+  questionId      Int
+  question        Question         @relation("QuestionAnswer", fields: [questionId], references: [id])
+  userId          Int
+  user            User             @relation("StudentAnswer", fields: [userId], references: [id])
+  value           String          
+  createdAt       DateTime         @default(now())
+
+  research        Research[]       @relation("AnswerResearch")
+  @@unique([questionId, userId]) // garante uma resposta por aluno por pergunta
+}
