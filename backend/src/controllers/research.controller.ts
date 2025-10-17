@@ -3,6 +3,8 @@ import { prisma } from '../prisma/prisma';
 import { ResearchFilter } from '../@types/researchFilter';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { AnswerType, ResearchStatus, Question, Answer } from '@prisma/client';
+import { getPublicKeyFromFile } from "./key.controller";
+import { PublicKey } from 'paillier-bigint';
 import logger from '../logger/logger';
 
 export const getAll = async (req: Request, res: Response): Promise<any> => {
@@ -595,12 +597,19 @@ async function processResults(research: any): Promise<any> {
 }
 
 async function getSumValues(answers: Answer[]) {
-    let total = 0;
-    for (const answer of answers) {
-        total += Number(answer.value);
+    const publicKeyJson = getPublicKeyFromFile();
+    const publicKey = new PublicKey(BigInt(publicKeyJson.n), BigInt(publicKeyJson.g));
+
+    const ciphertexts = answers
+        .map(a => a.value ? BigInt(a.value) : null)
+        .filter((v): v is bigint => v !== null);
+
+    let encryptedSum = publicKey.encrypt(BigInt(0));
+    for (const ct of ciphertexts) {
+        encryptedSum = publicKey.addition(encryptedSum, ct);
     }
 
-    return { sum: total.toString()};
+    return { sum: encryptedSum.toString()};
 }
 
 async function logInfoAnswers(answers: Answer[]) {
@@ -624,14 +633,6 @@ async function logInfoAnswers(answers: Answer[]) {
             }
         });
 
-        logger.debug("\t\t" + user?.name + " - " + getAnswerLabel(question.answerType, answer.value));
+        logger.debug("\t\t" + user?.name + " - " + answer.value);
     };
-}
-
-// Função auxiliar para mapear rótulos das opções
-function getAnswerLabel(answerType: AnswerType, value: string): string {
-    if (answerType === AnswerType.SIM_NAO) {
-        return value === '1' ? 'Sim' : 'Não';
-    }
-    return value.toString();
 }

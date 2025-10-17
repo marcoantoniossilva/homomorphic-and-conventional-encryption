@@ -1,4 +1,7 @@
 node_modules
 
+privateKey.json
+publicKey.json
+
 /generated/prisma
 /logs

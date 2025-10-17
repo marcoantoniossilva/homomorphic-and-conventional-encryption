@@ -41,7 +41,7 @@ async function main() {
 
     const teacherId = await prisma.user.create({
         data: {
-            name: 'Professor de Banco de Dados', email: 'professor@email.com', password: hashedPassword, role: 'PROFESSOR'
+            name: 'Professor de Banco de Dados 2025.2', email: 'professor@email.com', password: hashedPassword, role: 'PROFESSOR'
         },
         select: {
             id: true
@@ -59,7 +59,7 @@ async function main() {
 
     await prisma.research.create({
         data: {
-            title: "Pesquisa de Banco de Dados 2025.2",
+            title: "Pesquisa de Banco de Dados",
             courseId: course.id,
             deadline: new Date('2025-12-31'),
             status: "ABERTA",

@@ -9,22 +9,22 @@ protegidas mesmo durante o processamento estatístico. A proposta busca
 demonstrar a viabilidade prática dessa técnica em um contexto
 educacional real.
 
-A **branch atual (`main`)** não realiza a criptografia dos
-dados. Ela serve como base funcional do sistema para fins de
-desenvolvimento e testes iniciais, sem aplicar a camada de segurança
-criptográfica. Em versões futuras, será utilizada a criptografia
-homomórfica para proteger as respostas dos alunos.
+A **branch atual (`homomorphic-encryption`)** implementa a criptografia 
+dos valores das respostas utilizando criptografia homomórfica por meio da 
+biblioteca paillier-bigint.
 
 ## 🧩 Tecnologias Utilizadas
 
 **Frontend:** 
 - [Angular](https://angular.io/)
 - [Chart.js](https://www.chartjs.org/)
+- [paillier-bigint](https://www.npmjs.com/package/paillier-bigint/)
 
 **Backend:** 
 - [Node.js](https://nodejs.org/) 
 - [Express](https://expressjs.com/) 
 - [Prisma ORM](https://www.prisma.io/)
+- [paillier-bigint](https://www.npmjs.com/package/paillier-bigint/)
 
 **Banco de Dados:** 
 - [PostgreSQL](https://www.postgresql.org/) em container [Docker](https://www.docker.com/)
@@ -91,14 +91,25 @@ O script criará os seguintes registros:
     - "O professor demonstrou compreensão da disciplina" --- tipo *Escala Numérica* 
     - "A disciplina é interessante?" --- tipo *Sim/Não*
 
-### 5. Rodar o backend
+### 5. Gerar par de chaves e atualizar a chave do frontend
+
+Gere as chaves
+``` bash
+cd backend
+npm run generate-keys
+```
+Após gerar, atualizar o arquivo /frontend/privateKey.ts com os dados da chave privada, 
+que estará em /backend/privateKey.json, depois, a chave privada pode ser excluída do
+backend.
+
+### 6. Rodar o backend
 
 ``` bash
 cd backend
 npm run dev
 ```
 
-### 6. Rodar o frontend (em outro terminal)
+### 7. Rodar o frontend (em outro terminal)
 
 ``` bash
 cd frontend

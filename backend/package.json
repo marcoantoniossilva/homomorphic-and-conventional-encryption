@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "seed": "ts-node ./src/prisma/seed.ts"
+    "seed": "ts-node ./src/prisma/seed.ts",
+    "generate-keys": "ts-node ./src/app-scripts/generateKeys.ts"
   },
   "prisma": {
     "schema": "./src/prisma/schema.prisma"
@@ -21,6 +22,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "paillier-bigint": "^3.4.3",
     "prisma": "^6.9.0",
     "winston": "^3.17.0"
   },

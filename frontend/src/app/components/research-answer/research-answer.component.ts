@@ -23,6 +23,8 @@ import { Research } from '../../models/research.model';
 
 // Application Utilities
 import { ApplicationUtils } from '../../utils/application-utils';
+import { CryptographyService } from '../../services/cryptography.service';
+
 
 @Component({
     selector: 'app-research-answer',
@@ -51,7 +53,8 @@ export class ResearchAnswerComponent implements OnInit {
         private researchService: ResearchService,
         private answerService: AnswerService,
         private messageService: MessageService,
-        private applicationUtils: ApplicationUtils
+        private applicationUtils: ApplicationUtils,
+        private cryptographyService: CryptographyService
     ) { }
 
     ngOnInit(): void {
@@ -101,7 +104,7 @@ export class ResearchAnswerComponent implements OnInit {
         };
 
         for (const ans of payload.answers) {
-            ans.value = ans.value.toString();
+            ans.value = await this.cryptographyService.encryptAnswer(Number(ans.value));
         }
 
         this.answerService.submitAnswers(payload).subscribe({

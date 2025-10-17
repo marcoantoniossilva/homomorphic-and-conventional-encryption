@@ -24,6 +24,7 @@ import { Question, Research } from '../../models/research.model';
 
 // Application Utilities
 import { ApplicationUtils } from '../../utils/application-utils';
+import { CryptographyService } from '../../services/cryptography.service';
 
 @Component({
     selector: 'app-research-results',
@@ -52,7 +53,8 @@ export class ResearchResultsComponent implements OnInit {
         private router: Router,
         private researchService: ResearchService,
         private messageService: MessageService,
-        private applicationUtils: ApplicationUtils
+        private applicationUtils: ApplicationUtils,
+        private cryptographyService: CryptographyService
     ) { Chart.register(...registerables); }
 
     ngOnInit(): void {
@@ -90,7 +92,8 @@ export class ResearchResultsComponent implements OnInit {
     }
 
     async generatePieChart(question: Question): Promise<void> {
-        const avg = Number(question.sum) / question.totalAnswers;
+        const decrypted = await this.cryptographyService.decryptSum(question.sum);
+        const avg = Number(decrypted) / question.totalAnswers;
         const value = Math.min(Math.max(avg, 0), 1);
 
         this.chartTypes[question.id] = 'pie';
@@ -137,7 +140,8 @@ export class ResearchResultsComponent implements OnInit {
 
 
     async generateHorizontalBarChart(question: Question): Promise<void> {
-        const avg = Number(question.sum) / question.totalAnswers;
+        const decrypted = await this.cryptographyService.decryptSum(question.sum);
+        const avg = Number(decrypted) / question.totalAnswers;
         const maxValue = 10;
 
         this.chartTypes[question.id] = 'bar';
