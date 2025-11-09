@@ -69,25 +69,45 @@ npm run seed
 O script criará os seguintes registros:
 
 **Alunos:** 
-- aluno1@gmail.com --- senha `123456` 
-- aluno2@gmail.com --- senha `123456` 
-- aluno3@gmail.com --- senha `123456`
+- ana.oliveira@email.com --- senha `123456`
+- bruno.santos@email.com --- senha `123456`
+- carla.ferreira@email.com --- senha `123456`
+- diego.ramos@email.com --- senha `123456`
+- fernanda.lima@email.com --- senha `123456`
+- rafael.costa@email.com --- senha `123456`
+- juliana.pereira@email.com --- senha `123456`
+- lucas.nogueira@email.com --- senha `123456`
+- mariana.rocha@email.com --- senha `123456`
+- felipe.andrade@email.com --- senha `123456`
+- bianca.torres@email.com --- senha `123456`
+- eduardo.lima@email.com --- senha `123456`
+- andre.carvalho@email.com --- senha `123456`
+- marina.teixeira@email.com --- senha `123456`
+- gustavo.pereira@email.com --- senha `123456`
 
 **Administrador:** 
 - admin@email.com --- senha `123456`
 
 **Professor:** 
-- professor@email.com --- senha `123456`
+- ricardo.menezes@email.com --- senha `123456`
 
 **Disciplina:** 
 - Banco de Dados
 
 **Pesquisa:** 
-- Nome: *Pesquisa de Banco de Dados* 
+- Nome: *Pesquisa de Banco de Dados 2025.2* 
 - Data de término: *31/12/2025* 
 - Questões: 
-    - "O professor demonstrou compreensão da disciplina" --- tipo *Escala Numérica* 
-    - "A disciplina é interessante?" --- tipo *Sim/Não*
+    - "O professor deixou claros os objetivos da disciplina." --- tipo *Escala Numérica* 
+    - "Os conteúdos da disciplina foram apresentados de forma organizada e compreensível." --- tipo *Escala Numérica* 
+    - "Houve interação adequada entre o professor e os alunos (ex: perguntas, debates, feedback)." --- tipo *Escala Numérica* 
+    - "Os recursos (slides, material de apoio, laboratório, etc.) foram adequados para facilitar o aprendizado." --- tipo *Escala Numérica* 
+    - "A avaliação (provas, trabalhos) refletiu bem o que foi ensinado na disciplina." --- tipo *Escala Numérica* 
+    - "A carga de trabalho da disciplina (leitura, trabalhos, estudos) foi adequada às suas possibilidades." --- tipo *Escala Numérica* 
+    - "A disciplina contribuiu para o seu aprendizado ou desenvolvimento acadêmico." --- tipo *Escala Numérica* 
+    - "O professor demonstrou domínio do conteúdo e entusiasmo na aula." --- tipo *Escala Numérica* 
+    - "Os alunos foram motivados a participar e se engajar com a disciplina." --- tipo *Escala Numérica* 
+    - "De forma geral, eu recomendaria esta disciplina (e este professor) para colegas em semestres futuros." --- tipo *Sim/Não*
 
 ### 5. Rodar o backend
 
